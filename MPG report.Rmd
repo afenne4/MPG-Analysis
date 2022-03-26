@@ -9,8 +9,8 @@ output: html_document
 library(ggplot2)
 library(plyr)
 library(dplyr)
-
-
+library(gridExtra)
+library(GGally)
 ```
 
 ```{r initial data examination}
@@ -35,3 +35,43 @@ summary(mtdat)
 ```
 
 boxplots of the data
+```{r}
+b1<-ggplot(mtdat,aes(y=mpg,x=am))+
+    geom_boxplot()+
+    xlab("Transmission Type")+
+    ylab("Miles Per Gallon (MPG)")+
+    ggtitle("MPG for Automatic vs. Manual Cars")+
+    theme(plot.title=element_text(hjust=.5))
+
+b2<-ggplot(data=mtdat,aes(y=mpg,x=am,fill=cyl))+
+    geom_boxplot()+
+    xlab("Transmission Type")+
+    ylab("Miles Per Gallon (MPG)")+
+    ggtitle("MPG for Automatic vs. Manual Cars \n as a Function of Cylinders")+
+    theme(plot.title=element_text(hjust=.5))+
+    guides(fill=guide_legend(title="Cylinders"))
+
+b3<-ggplot(data=mtdat,aes(y=mpg,x=am,fill=gear))+
+    geom_boxplot()+
+    xlab("Transmission Type")+
+    ylab("Miles Per Gallon (MPG)")+
+    ggtitle("MPG for Automatic vs. Manual Cars \n as a Function of Gears")+
+    theme(plot.title=element_text(hjust=.5))
+
+b4<-ggplot(data=mtdat,aes(y=mpg,x=am,fill=vs))+
+    geom_boxplot()+
+    xlab("Transmission Type")+
+    ylab("Miles Per Gallon (MPG)")+
+    ggtitle("MPG for Automatic vs. Manual Cars \n as a Function of Cylinders")+
+    theme(plot.title=element_text(hjust=.5))+
+    guides(fill=guide_legend(title="Engine"))
+
+grid.arrange(b1,b2,b3,b4,nrow=2)
+```
+
+
+```{r pairs plot numeric variables,message=FALSE}
+mtdat%>%
+    select_if(is.numeric)%>%
+    ggpairs(.)
+```
