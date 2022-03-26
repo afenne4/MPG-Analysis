@@ -109,22 +109,33 @@ mtdat%>%
 ```
 
 ## Modeling analysis
+For the modelling analysis I compare 3 different models. The first examines the 
+effect of transmission type on mpg. The second model examines how transmission type,
+number of cylinders, and engine type influence mpg. The third model examines how these
+predictors in addition to weight and gross horsepower affect mpg.
+
 ```{r linear models,eval=TRUE}
 fit1<-lm(mpg~am,data=mtdat)
 ```
 
-### Model fit
+### Model Residual Analysis
+A plot of model diagnostics for the most basic model is presented in the appendix. 
+To summarize, the distribution of residuals for automatic and manual cars appears 
+to be normal andequivalent, satisfying one of the assumptions of linear regression.
+There also appears to be no observations that have high influence, increasing 
+confidence in the unbiasdness of the model coefficients.
+
 ```{r model diagnostics,appendix=TRUE,eval=FALSE, fig.show="hold", out.width="50%"}
 par(mfrow=c(2,2))
 plot(fit1)
 ```
+### Model Comparison
 
 ```{r model comparisons,eval=TRUE}
 fit2<-update(fit1,mpg~am+cyl+vs)
 fit3<-update(fit1,mpg~am++cyl+vs+wt+hp)
 anova(fit1,fit2,fit3)
 ```
-
 
 
 ```{r model comparison table, results='asis',message=FALSE}
