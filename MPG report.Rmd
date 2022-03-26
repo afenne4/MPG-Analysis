@@ -28,14 +28,16 @@ mtdat$am<-factor(mtcars$am,labels=c("Automatic","Manual"))
 mtdat$gear<-factor(mtcars$gear)
 mtdat$carb<-factor(mtcars$carb)
 ```
+# Exploratory Data Analysis summary
 
 Now lets look at a summary of the data
 ```{r summary of data}
 summary(mtdat)
 ```
 
-boxplots of the data
-```{r}
+## Boxplots of the data
+
+```{r boxplots}
 b1<-ggplot(mtdat,aes(y=mpg,x=am))+
     geom_boxplot()+
     xlab("Transmission Type")+
@@ -69,9 +71,33 @@ b4<-ggplot(data=mtdat,aes(y=mpg,x=am,fill=vs))+
 grid.arrange(b1,b2,b3,b4,nrow=2)
 ```
 
+## Correlation plots
 
 ```{r pairs plot numeric variables,message=FALSE}
 mtdat%>%
     select_if(is.numeric)%>%
     ggpairs(.)
+```
+
+## Modeling analysis
+```{r linear models}
+fit1<-lm(mpg~am,data=mtdat)
+summary(fit1)
+```
+
+### Model fit
+```{r model diagnostics}
+plot(fit1)
+```
+
+```{r model comparisons}
+fit2<-update(fit1,mpg~am+cyl+vs)
+fit3<-update(fit1,mpg~am++cyl+vs+wt+hp)
+anova(fit1,fit2,fit3)
+```
+
+
+```{r}
+summary(fit2)$coef[,4]
+fit2$coefficients
 ```
