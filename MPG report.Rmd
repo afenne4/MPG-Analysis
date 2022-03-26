@@ -95,7 +95,12 @@ b4<-ggplot(data=mtdat,aes(y=mpg,x=am,fill=vs))+
 grid.arrange(b1,b2,b3,b4,nrow=2)
 ```
 
-## Correlation plots
+## Correlation between numeric variables
+The main insights from the correlation matrix is that all the numeric variables
+have a relationship with mpg. Variables such as horsepower, displacement, and weight
+all have strong negative correlations with mpg (>.7). Thus, as these variables
+increase in magnitude, mpg will decrease. Univariate distributions show that most
+variables are unimodal and roughly normally distributed with varying degrees of skew.
 
 ```{r pairs plot numeric variables,eval=FALSE,message=FALSE,appendix=TRUE}
 mtdat%>%
