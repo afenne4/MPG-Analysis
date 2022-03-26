@@ -24,9 +24,12 @@ library(stargazer)
 ```{r initial data examination,eval=TRUE,echo=FALSE,appendix=TRUE}
 mtdat<-mtcars
 ```
-
-Based on this output, it appears that many numeric variables need to be converted
-to factors especially the am variable since that is of particular interest
+# Synopsis
+The goal of this report is to investigate whether an automatic or manual transmission
+is more fuel efficient (better MPG). I will be using the mtcars data set which 
+contains 32 observations on 11 variables. First I will begin with an exploratory 
+data analysis, to get a general idea of how the varibles in the data set interact.
+Then I will conduct a modelling analysis and draw my conclusions.
 
 ```{r converting variables to factors,appendix=TRUE}
 mtdat$cyl<-factor(mtcars$cyl)
@@ -37,12 +40,26 @@ mtdat$carb<-factor(mtcars$carb)
 ```
 # Exploratory Data Analysis summary
 
-Now lets look at a summary of the data
-```{r summary of data,eval=TRUE}
+```{r summary of data,eval=FALSE,appendix=TRUE}
 summary(mtdat)
 ```
 
 ## Boxplots of the data
+I will begin my exploratory data analysis by first examining boxplots of various
+variable interactions. The plot is contained in the appendix, but I will summarize
+it here. The first boxplot seems to show that manual cars have a better mpg than
+automatic cars. The lower quartile of the manual boxplot is greater than the
+upper quartile of the automatic boxplot. The next boxplot shows the effect 
+of transmission type on mpg depending on how many cylinders the cars have. It seems
+that regardless of transmission type, increasing numbers of cylinders result in worse
+mpg. When examining the influence of the number of gears a car has on the fuel 
+efficiency of automatic versus manual cars, it seems that 3 gear cars are the least
+efficient. Then cars with 4 gears, with manual cars being slighlty more efficient than
+automatic. And 5 gear cars being similar to 4 gear cars if not having slighlty worse
+mpg. The last boxplot examines how engine type influences the mpg of automatic and
+manual cars. For both automatic and manual cars, v-shaped engines result in lower 
+mpg than straight engines. For equivalent engine types, automatic cars have lower
+mpg than manual cars.
 
 ```{r boxplots,appendix=TRUE,eval=FALSE}
 b1<-ggplot(mtdat,aes(y=mpg,x=am))+
@@ -71,7 +88,7 @@ b4<-ggplot(data=mtdat,aes(y=mpg,x=am,fill=vs))+
     geom_boxplot()+
     xlab("Transmission Type")+
     ylab("Miles Per Gallon (MPG)")+
-    ggtitle("MPG for Automatic vs. Manual Cars \n as a Function of Cylinders")+
+    ggtitle("MPG for Automatic vs. Manual Cars \n as a Function of Engine")+
     theme(plot.title=element_text(hjust=.5))+
     guides(fill=guide_legend(title="Engine"))
 
