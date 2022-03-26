@@ -7,13 +7,17 @@ header-includes:
     - \usepackage{dcolumn}
 ---
 
-```{r libraries}
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, eval = FALSE)
+```
+
+```{r libraries,message=FALSE,warning=FALSE}
 library(ggplot2)
 library(plyr)
 library(dplyr)
 library(gridExtra)
 library(GGally)
-library(apsrtable)
+library(stargazer)
 
 ```
 
@@ -106,8 +110,12 @@ summary(fit2)$coef[,4]
 fit2$coefficients
 ```
 
-```{r}
+```{r, results='asis'}
 # Create nested regression model table
-apsrtable(M1, M2, M3, M4, M5, Sweave = TRUE,
-      stars = "default")
+stargazer(fit1,fit2,fit3)
+```
+
+# Appendix
+```{r, ref.label=knitr::all_labels(),echo=TRUE,eval=TRUE,warning=FALSE,message=FALSE}
+
 ```
