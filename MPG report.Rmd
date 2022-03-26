@@ -1,0 +1,37 @@
+---
+title: "MPG analysis"
+author: "Alex Fennell"
+date: "3/25/2022"
+output: html_document
+---
+
+```{r libraries}
+library(ggplot2)
+library(plyr)
+library(dplyr)
+
+
+```
+
+```{r initial data examination}
+mtdat<-mtcars
+str(mtdat)
+```
+
+Based on this output, it appears that many numeric variables need to be converted
+to factors especially the am variable since that is of particular interest
+
+```{r converting variables to factors}
+mtdat$cyl<-factor(mtcars$cyl)
+mtdat$vs<-factor(mtcars$vs,labels=c("V-Shaped","Straight"))
+mtdat$am<-factor(mtcars$am,labels=c("Automatic","Manual"))
+mtdat$gear<-factor(mtcars$gear)
+mtdat$carb<-factor(mtcars$carb)
+```
+
+Now lets look at a summary of the data
+```{r summary of data}
+summary(mtdat)
+```
+
+boxplots of the data
