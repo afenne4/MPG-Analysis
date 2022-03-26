@@ -2,7 +2,9 @@
 title: "MPG analysis"
 author: "Alex Fennell"
 date: "3/25/2022"
-output: html_document
+output: pdf_document
+header-includes:
+    - \usepackage{dcolumn}
 ---
 
 ```{r libraries}
@@ -11,6 +13,8 @@ library(plyr)
 library(dplyr)
 library(gridExtra)
 library(GGally)
+library(apsrtable)
+
 ```
 
 ```{r initial data examination}
@@ -100,4 +104,10 @@ anova(fit1,fit2,fit3)
 ```{r}
 summary(fit2)$coef[,4]
 fit2$coefficients
+```
+
+```{r}
+# Create nested regression model table
+apsrtable(M1, M2, M3, M4, M5, Sweave = TRUE,
+      stars = "default")
 ```
