@@ -107,10 +107,11 @@ anova(fit1,fit2,fit3)
 
 ```{r model comparison table, results='asis',message=FALSE}
 # Create nested regression model table
-stargazer(fit1,fit2,fit3,type='latex',header=FALSE,single.row = TRUE)
+stargazer(fit1,fit2,fit3,type='latex',header=FALSE,single.row = TRUE,
+          title="MPG Regression Model Results")
 ```
 
 # Appendix
-```{r, ref.label = knitr::all_labels(appendix == TRUE),echo=TRUE,eval=TRUE,warning=FALSE,message=FALSE}
+```{r, ref.label = knitr::all_labels(appendix == TRUE),echo=TRUE,eval=TRUE,warning=FALSE,message=FALSE,fig.dim=c(6.5,5)}
 
 ```
