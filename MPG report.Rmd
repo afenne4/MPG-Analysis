@@ -8,10 +8,10 @@ header-includes:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, eval = FALSE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
-```{r libraries,message=FALSE,warning=FALSE}
+```{r libraries,message=FALSE,warning=FALSE,appendix=TRUE}
 library(ggplot2)
 library(plyr)
 library(dplyr)
@@ -21,15 +21,14 @@ library(stargazer)
 
 ```
 
-```{r initial data examination}
+```{r initial data examination,eval=TRUE,echo=FALSE,appendix=TRUE}
 mtdat<-mtcars
-str(mtdat)
 ```
 
 Based on this output, it appears that many numeric variables need to be converted
 to factors especially the am variable since that is of particular interest
 
-```{r converting variables to factors}
+```{r converting variables to factors,appendix=TRUE}
 mtdat$cyl<-factor(mtcars$cyl)
 mtdat$vs<-factor(mtcars$vs,labels=c("V-Shaped","Straight"))
 mtdat$am<-factor(mtcars$am,labels=c("Automatic","Manual"))
@@ -39,18 +38,18 @@ mtdat$carb<-factor(mtcars$carb)
 # Exploratory Data Analysis summary
 
 Now lets look at a summary of the data
-```{r summary of data}
+```{r summary of data,eval=TRUE}
 summary(mtdat)
 ```
 
 ## Boxplots of the data
 
-```{r boxplots}
+```{r boxplots,appendix=TRUE,eval=FALSE}
 b1<-ggplot(mtdat,aes(y=mpg,x=am))+
     geom_boxplot()+
     xlab("Transmission Type")+
     ylab("Miles Per Gallon (MPG)")+
-    ggtitle("MPG for Automatic vs. Manual Cars")+
+    ggtitle("MPG for Automatic vs. \n Manual Cars")+
     theme(plot.title=element_text(hjust=.5))
 
 b2<-ggplot(data=mtdat,aes(y=mpg,x=am,fill=cyl))+
@@ -81,41 +80,37 @@ grid.arrange(b1,b2,b3,b4,nrow=2)
 
 ## Correlation plots
 
-```{r pairs plot numeric variables,message=FALSE}
+```{r pairs plot numeric variables,eval=FALSE,message=FALSE,appendix=TRUE}
 mtdat%>%
     select_if(is.numeric)%>%
     ggpairs(.)
 ```
 
 ## Modeling analysis
-```{r linear models}
+```{r linear models,eval=TRUE}
 fit1<-lm(mpg~am,data=mtdat)
-summary(fit1)
 ```
 
 ### Model fit
-```{r model diagnostics}
+```{r model diagnostics,appendix=TRUE,eval=FALSE, fig.show="hold", out.width="50%"}
+par(mfrow=c(2,2))
 plot(fit1)
 ```
 
-```{r model comparisons}
+```{r model comparisons,eval=TRUE}
 fit2<-update(fit1,mpg~am+cyl+vs)
 fit3<-update(fit1,mpg~am++cyl+vs+wt+hp)
 anova(fit1,fit2,fit3)
 ```
 
 
-```{r}
-summary(fit2)$coef[,4]
-fit2$coefficients
-```
 
-```{r, results='asis'}
+```{r model comparison table, results='asis',message=FALSE}
 # Create nested regression model table
-stargazer(fit1,fit2,fit3)
+stargazer(fit1,fit2,fit3,type='latex',header=FALSE,single.row = TRUE)
 ```
 
 # Appendix
-```{r, ref.label=knitr::all_labels(),echo=TRUE,eval=TRUE,warning=FALSE,message=FALSE}
+```{r, ref.label = knitr::all_labels(appendix == TRUE),echo=TRUE,eval=TRUE,warning=FALSE,message=FALSE}
 
 ```
