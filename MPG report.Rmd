@@ -1,23 +1,21 @@
 ---
 title: "MPG analysis"
-author: "Alex Fennell"
+subtitle: "Alex Fennell"
 output: pdf_document
+fontsize: 10pt
 header-includes:
     - \usepackage{dcolumn}
+
 ---
+\vspace{-2cm}
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ```{r libraries,message=FALSE,warning=FALSE,appendix=TRUE}
-library(ggplot2)
-library(plyr)
-library(dplyr)
-library(gridExtra)
-library(GGally)
+library(ggplot2);library(plyr);library(dplyr);library(gridExtra);library(GGally)
 library(stargazer)
-
 ```
 
 ```{r initial data examination,eval=TRUE,echo=FALSE,appendix=TRUE}
@@ -38,11 +36,6 @@ mtdat$gear<-factor(mtcars$gear)
 mtdat$carb<-factor(mtcars$carb)
 ```
 # Exploratory Data Analysis summary
-
-```{r summary of data,eval=FALSE,appendix=TRUE}
-summary(mtdat)
-```
-
 ## Boxplots of the data
 I will begin my exploratory data analysis by first examining boxplots of various
 variable interactions. The plot is contained in the appendix, but I will summarize
@@ -140,12 +133,13 @@ fit3<-update(fit1,mpg~am+cyl+vs+wt+hp)
 anova(fit1,fit2,fit3)
 ```
 
-This anova table shows that since the p-value is less than .05, the second model with
-cylinders and engine type improves upon the original model with just transmission type.
-Furthermore, the third model improves upon the second one as the p-value for that 
-comparison is also less than .05. Thus, including weight and horsepower in addition
-to the predictors from second model seems to explain more of the variance in mpg,
-than in the model that excludes these weight and horsepower.
+This anova table shows model comparison results. It shows that the second model with
+cylinders and engine type improves upon the original model with just transmission type,
+since the p-value is less than .05. Furthermore, the third model improves upon the
+second one as the p-value for that comparison is also less than .05. Thus, including
+weight and horsepower in addition to the predictors from second model seems to explain
+more of the variance in mpg, than in the model that excludes these weight and 
+horsepower.
 
 ## Model Coefficient Comparison
 
