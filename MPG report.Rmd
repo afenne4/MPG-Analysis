@@ -1,7 +1,6 @@
 ---
 title: "MPG analysis"
 author: "Alex Fennell"
-date: "3/25/2022"
 output: pdf_document
 header-includes:
     - \usepackage{dcolumn}
@@ -108,7 +107,7 @@ mtdat%>%
     ggpairs(.)
 ```
 
-## Modeling analysis
+# Modeling analysis
 For the modelling analysis I compare 3 different models. The first examines the 
 effect of transmission type on mpg. The second model examines how transmission type,
 number of cylinders, and engine type influence mpg. These additional variables were
@@ -122,7 +121,7 @@ less related to each other than the other variables.
 fit1<-lm(mpg~am,data=mtdat)
 ```
 
-### Model Residual Analysis
+## Model Residual Analysis
 A plot of model diagnostics for the most basic model is presented in the appendix. 
 To summarize, the distribution of residuals for automatic and manual cars appears 
 to be normal and equivalent, satisfying one of the assumptions of linear regression.
@@ -133,7 +132,7 @@ confidence in the unbiasdness of the model coefficients.
 par(mfrow=c(2,2))
 plot(fit1)
 ```
-### Model Comparison
+## Model Comparison
 
 ```{r model comparisons,eval=TRUE}
 fit2<-update(fit1,mpg~am+cyl+vs)
@@ -147,6 +146,8 @@ Furthermore, the third model improves upon the second one as the p-value for tha
 comparison is also less than .05. Thus, including weight and horsepower in addition
 to the predictors from second model seems to explain more of the variance in mpg,
 than in the model that excludes these weight and horsepower.
+
+## Model Coefficient Comparison
 
 ```{r model comparison table, results='asis',message=FALSE}
 # Create nested regression model table
@@ -176,6 +177,20 @@ model says that manual cars of average weight and horsepower with 4 cylinders an
 a v-shaped engine have 2.7 more mpg on average than automatic cars. The only  two
 significant coefficients in this model are weight and horsepower suggesting these
 are better at predicting mpg.
+
+# Executive Summary
+The goal of this report was to investigate whether an automatic or manual transmission
+is more fuel efficient (better MPG) using the mtcars dataset. Three models were 
+compared. In the first model, mpg was predicted by transmission type. In the second
+model mpg was predicted by transmission type, number of cylinders, and engine style.
+The final model had mpg predicted by transmission type, number of cylinders, engine
+style, weight, and horsepower. A model selection analysis determined that the third
+model was the best model and provided additional information over and above the other
+two models. This model determined that tranmission type did not have a significant
+impact on mpg. The model states that manual cars get 2.7 more mpg than automatic
+cars but this is not significantly different from 0.
+
+\tiny
 # Appendix
 ```{r, ref.label = knitr::all_labels(appendix == TRUE),echo=TRUE,eval=TRUE,warning=FALSE,message=FALSE,fig.dim=c(6.5,5)}
 
