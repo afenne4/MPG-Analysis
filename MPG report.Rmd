@@ -167,7 +167,15 @@ presented. The coefficient of 3.17 for amManual is statistically significant (p<
 suggesting that manual cars with 4 cylinders, and a v-shaped engine have 3.17 more 
 mpg than automatic cars with 4 cylinders and a v-shaped engine (22.8 vs. 25.97).
 The 95% confidence interval for the amManual coefficient again does not contain 0,
-as expected given the p-value is less than .05. 
+as expected given the p-value is less than .05. The final column contains the last
+model with weight and horsepower added. In this model the amManual coefficient is 
+not statistically signficant and the 95% confidence interval does contain 0. Thus,
+when weight and horsepower are taken into account, transmission type does not seem
+to be as important of a factor in influencing mpg. The amManual coefficient in this
+model says that manual cars of average weight and horsepower with 4 cylinders and
+a v-shaped engine have 2.7 more mpg on average than automatic cars. The only  two
+significant coefficients in this model are weight and horsepower suggesting these
+are better at predicting mpg.
 # Appendix
 ```{r, ref.label = knitr::all_labels(appendix == TRUE),echo=TRUE,eval=TRUE,warning=FALSE,message=FALSE,fig.dim=c(6.5,5)}
 
